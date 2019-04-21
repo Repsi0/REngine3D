@@ -7,6 +7,7 @@
 #include <strstream>
 
 using namespace vector_math;
+using namespace Utils;
 
 class REngine3D {
 private:

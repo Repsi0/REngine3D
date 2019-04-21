@@ -1,5 +1,7 @@
 #ifndef utils_h
 #define utils_h
+#include <vector>
+#include <SDL.h>
 
 namespace Utils {
 	struct mat4x4 { //4x4 Matrix struct
@@ -14,7 +16,7 @@ namespace Utils {
 	struct vertex {
 		int x;
 		int y;
-		color c;
+		Utils::color c;
 	};
 	struct vec3d { //3D vector (w is required to multiply w/ mat4x4)
 		float x = 0, y = 0, z = 0, w = 1;
@@ -33,7 +35,7 @@ namespace Utils {
 		float w = 0;
 	};
 	struct triangle { //self explanatory
-		vec3d p[3];
+		Utils::vec3d p[3];
 		Uint8 color[3];
 		float depth;
 	};
@@ -46,9 +48,9 @@ namespace Utils {
 		float roll;
 	};
 	struct gameobject { //mesh w/ position, rotation, all that jazz
-		mesh m;
-		vec3d pos;
-		rotation rot;
+		Utils::mesh m;
+		Utils::vec3d pos;
+		Utils::rotation rot;
 	};
 }
 

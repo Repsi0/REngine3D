@@ -196,7 +196,7 @@ void Drawer::Triangle(Utils::vertex V[3], Utils::vec3d pos, Utils::vec3d looking
 									float depth = sqrtf((pos.x - j)*(pos.x - j) + (pos.y - i)*(pos.y - i) + (pos.z - depths)*(pos.z - depths));
 									if (looking.z > 0) {
 										if (depth > pos.z) {
-											if (depth < this->depthBuffer[i * W + j]) {
+											if (depth < depthBuffer[i * W + j]) {
 												this->putPixel(j, i, { r,g,b });
 												this->depthBuffer[i * W + j] = depth;
 											}
@@ -205,7 +205,7 @@ void Drawer::Triangle(Utils::vertex V[3], Utils::vec3d pos, Utils::vec3d looking
 									else {
 										if (depth < pos.z) {
 											if (depth < depthBuffer[i * W + j]) {
-												putPixel(j, i, { r,g,b });
+												this->putPixel(j, i, { r,g,b });
 												depthBuffer[i * W + j] = depth;
 											}
 										}

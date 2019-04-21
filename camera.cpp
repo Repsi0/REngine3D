@@ -13,7 +13,7 @@ camera::camera(float fov, float zDists[2], const int width, const int height, ve
 	right = facing_xyz[0];
 	up = facing_xyz[1];
 	forward = facing_xyz[2];
-	camera::calculateProjectionMatrix();
+	this->calculateProjectionMatrix();
 }
 
 camera::camera(float fov, const int width, const int height) {
@@ -24,7 +24,7 @@ camera::camera(float fov, const int width, const int height) {
 	right = { 1,0,0 };
 	up = { 0,1,0 };
 	forward = { 0,0,1 };
-	camera::calculateProjectionMatrix();
+	this->calculateProjectionMatrix();
 }
 
 camera::camera(const int width, const int height) {
@@ -35,7 +35,7 @@ camera::camera(const int width, const int height) {
 	right = {1,0,0};
 	up = {0,1,0};
 	forward = {0,0,1};
-	camera::calculateProjectionMatrix();
+	this->calculateProjectionMatrix();
 }
 
 camera::~camera() {
@@ -81,7 +81,7 @@ mat4x4 camera::getViewMat() {
 //SETTERS
 void camera::setPosition(vec3d pos) {
 	pos = pos;
-	camera::calculateViewMatrix();
+	this->calculateViewMatrix();
 }
 void camera::changePosition(vec3d offset) {
 	pos = vector_math::Vector_Add(pos, offset);
@@ -92,14 +92,14 @@ void camera::rotateBy(rotation rt) {
 }
 void camera::setAspectRatio(float ar) {
 	aspectRatio = ar;
-	camera::calculateProjectionMatrix();
+	this->calculateProjectionMatrix();
 }
 void camera::setFOV(float fov) {
 	fov = fov;
-	camera::calculateProjectionMatrix();
+	this->calculateProjectionMatrix();
 }
 void camera::setViewDistance(float zDists[2]) {
 	zNear = zDists[0];
 	zFar = zDists[1];
-	camera::calculateProjectionMatrix();
+	this->calculateProjectionMatrix();
 }

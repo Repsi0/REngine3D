@@ -1,5 +1,11 @@
 #ifndef REngine3D_h
 #define REngine3D_h
+#include "utils.h"
+#include "camera.h"
+#include "vector_math.h"
+#include "drawer.h" //Used to draw 2D shapes, based on SDL.
+#include <fstream>
+#include <strstream>
 
 class REngine3D {
 private:
