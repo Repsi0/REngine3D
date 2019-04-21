@@ -1,6 +1,5 @@
 #ifndef utils_h
 #define utils_h
-#include <vector>
 
 namespace Utils {
 	struct mat4x4 { //4x4 Matrix struct
@@ -49,12 +48,6 @@ namespace Utils {
 	struct gameobject { //mesh w/ position, rotation, all that jazz
 		mesh m;
 		vec3d pos;
-		rotation rot;
-	};
-	
-	struct camera {
-		vec3d pos;
-		vec3d look;
 		rotation rot;
 	};
 }

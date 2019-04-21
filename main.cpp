@@ -1,5 +1,9 @@
 #include "REngine3D.h"
 #include <chrono>
+#include <iostream>
+#include "utils.h"
+#include <vector>
+#include <SDL.h>
 
 const int WIDTH = 800;
 const int HEIGHT = 600;
@@ -48,38 +52,38 @@ int main(int argc, char* argv[]) {
 			else if (windowEvent.type == SDL_KEYDOWN) {
 				switch (windowEvent.key.keysym.sym) {
 					case SDLK_UP:
-						reng.cam.rot.pitch += 1.0f * dt;
+					//	reng.cam.rot.pitch += 1.0f * dt;
 						//reng.cam.calculateRotation();
 						break;
 					case SDLK_DOWN:
-						reng.cam.rot.pitch -= 1.0f * dt;
+					//	reng.cam.rot.pitch -= 1.0f * dt;
 						//reng.cam.calculateRotation();
 						break;
 					case SDLK_LEFT:
-						reng.cam.rot.yaw -= 1.0f * dt;
+					//	reng.cam.rot.yaw -= 1.0f * dt;
 						//reng.cam.calculateRotation();
 						break;
 					case SDLK_RIGHT:
-						reng.cam.rot.yaw += 1.0f * dt;
+					//	reng.cam.rot.yaw += 1.0f * dt;
 						//reng.cam.calculateRotation();
 						break;
 					case SDLK_a:
-						reng.cam.pos.x += 80.0f * dt;
+					//	reng.cam.pos.x += 80.0f * dt;
 						break;
 					case SDLK_d:
-						reng.cam.pos.x -= 80.0f * dt;
+					//	reng.cam.pos.x -= 80.0f * dt;
 						break;
 					case SDLK_w:
-						reng.cam.pos.y += 80.0f * dt;
+					//	reng.cam.pos.y += 80.0f * dt;
 						break;
 					case SDLK_s:
-						reng.cam.pos.y -= 80.0f * dt;
+					//	reng.cam.pos.y -= 80.0f * dt;
 						break;
 					case SDLK_q:
-						reng.cam.pos.z -= 80.0f * dt;
+					//	reng.cam.pos.z -= 80.0f * dt;
 						break;
 					case SDLK_e:
-						reng.cam.pos.z += 80.0f * dt;
+					//	reng.cam.pos.z += 80.0f * dt;
 						break;
 				}
 			}
