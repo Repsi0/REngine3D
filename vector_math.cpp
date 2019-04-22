@@ -32,6 +32,19 @@ namespace vector_math {
 		float l = Vector_Magnitude(v);
 		return { v.x / l,v.y / l,v.z / l };
 	}
+	vec3d Vector_RotateAroundVector(vec3d v, vec3d k, float a) {
+		k = Vector_Normalize(k);
+		vec3d A = Vector_Mul(v, cosf(a));
+		vec3d B0 = Vector_CrossProduct(k,v);
+		vec3d B = Vector_Mul(B0, sinf(a));
+		float dp = Vector_DotProduct(k,v);
+		float sc = (1.0f - cosf(a));
+		vec3d C0 = Vector_Mul(k,dp);
+		vec3d C = Vector_Mul(C0, sc);
+		vec3d final0 = Vector_Add(A,B);
+		vec3d final1 = Vector_Add(final0, C);
+		return final1;
+	}
 	float Vector_DotProduct(vec3d a, vec3d b) {
 		return a.x*b.x + a.y*b.y + a.z*b.z;
 	}

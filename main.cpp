@@ -4,17 +4,22 @@
 #include "utils.h"
 #include <vector>
 #include <SDL.h>
+#include "camera.h"
 
 const int WIDTH = 800;
 const int HEIGHT = 600;
 const char* TITLE = "Test!";
+const float FOV = 90.0f;
+const float ZNEAR = 0.1f;
+const float ZFAR = 1000.0f;
 
 int main(int argc, char* argv[]) {
 	
 	bool success;
 	//Drawer drawer(TITLE, WIDTH, HEIGHT, success);
-	REngine3D reng(TITLE, WIDTH, HEIGHT, 90.0f, 0.1f, 1000.0f, success);
-
+	REngine3D reng(TITLE, WIDTH, HEIGHT, success);
+	camera* cam;
+	cam = new camera(FOV, new float[2]{ ZNEAR,ZFAR }, WIDTH, HEIGHT, new Utils::vec3d[3]{ {1,0,0},{0,1,0},{0,0,1} });
 	const char* filename = "C:\\Models\\teapot.obj";
 
 	std::vector<Utils::gameobject> world;
@@ -43,7 +48,7 @@ int main(int argc, char* argv[]) {
 			start = std::chrono::system_clock::now();
 			//Render
 			reng.ClearScr({0,0,0});
-			reng.DrawObjects(world, {0,0,0}, {0,a,0});
+			reng.DrawObjects(world, {0,0,0}, {0,a,0}, cam);
 			//Handle events
 			SDL_PollEvent(&windowEvent);
 			if (windowEvent.type == SDL_QUIT) {
@@ -52,38 +57,34 @@ int main(int argc, char* argv[]) {
 			else if (windowEvent.type == SDL_KEYDOWN) {
 				switch (windowEvent.key.keysym.sym) {
 					case SDLK_UP:
-					//	reng.cam.rot.pitch += 1.0f * dt;
-						//reng.cam.calculateRotation();
+						cam->rotateBy({1.0f*dt,0,0});
 						break;
 					case SDLK_DOWN:
-					//	reng.cam.rot.pitch -= 1.0f * dt;
-						//reng.cam.calculateRotation();
+						cam->rotateBy({ -1.0f*dt,0,0 });
 						break;
 					case SDLK_LEFT:
-					//	reng.cam.rot.yaw -= 1.0f * dt;
-						//reng.cam.calculateRotation();
+						cam->rotateBy({ 0,-1.0f*dt,0 });
 						break;
 					case SDLK_RIGHT:
-					//	reng.cam.rot.yaw += 1.0f * dt;
-						//reng.cam.calculateRotation();
+						cam->rotateBy({ 0,1.0f*dt,0 });
 						break;
 					case SDLK_a:
-					//	reng.cam.pos.x += 80.0f * dt;
+						cam->changePosition({80.0f * dt,0,0});
 						break;
 					case SDLK_d:
-					//	reng.cam.pos.x -= 80.0f * dt;
+						cam->changePosition({ -80.0f * dt,0,0 });
 						break;
 					case SDLK_w:
-					//	reng.cam.pos.y += 80.0f * dt;
+						cam->changePosition({ 0,80.0f * dt,0 });
 						break;
 					case SDLK_s:
-					//	reng.cam.pos.y -= 80.0f * dt;
+						cam->changePosition({ 0,-80.0f * dt,0 });
 						break;
 					case SDLK_q:
-					//	reng.cam.pos.z -= 80.0f * dt;
+						cam->changePosition({ 0,0,80.0f * dt});
 						break;
 					case SDLK_e:
-					//	reng.cam.pos.z += 80.0f * dt;
+						cam->changePosition({ 0,0,-80.0f * dt });
 						break;
 				}
 			}

@@ -5,7 +5,29 @@
 
 using namespace Utils;
 
-Drawer::Drawer(const char *TITLE, const int WIDTH, const int HEIGHT, bool &success, int driver, Uint32 flags) {
+Drawer::Drawer(const char *TITLE, const int WIDTH, const int HEIGHT, bool &success, int driver=-1, Uint32 flags=SDL_RENDERER_ACCELERATED) {
+	W = WIDTH;
+	H = HEIGHT;
+	success = false;
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+		std::printf("SDL could not be initialized! SDL ERROR: %s", SDL_GetError());
+	}
+	else {
+		// SDL initialized correctly, proceed!
+		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI);
+		if (window == NULL) {
+			std::printf("SDL could not create window! SDL ERROR: %s", SDL_GetError());
+		}
+		else {
+			success = true;
+			CreateSurface();
+		}
+	}
+	depthBuffer = new float[WIDTH * HEIGHT];
+	ClearScr({ 0,0,0 });
+}
+
+Drawer::Drawer(const char *TITLE, const int WIDTH, const int HEIGHT, bool &success) {
 	W = WIDTH;
 	H = HEIGHT;
 	success = false;
@@ -44,7 +66,7 @@ void Drawer::putPixel(int x, int y, color c) {
 	int red = (int)(c.r*255.0f) % 255;
 	int green = (int)(c.g*255.0f) % 255;
 	int blue = (int)(c.b*255.0f) % 255;
-	Uint32 pixel = red + (green << 8) + (blue << 16) + (255 << 24);
+	Uint32 pixel = blue + (green << 8) + (red << 16) + (255 << 24);
 	if (x >= 0 && x <= surf->w - 1 && y >= 0 && y <= surf->h - 1) {
 		Uint32* pixels = (Uint32 *)surf->pixels;
 		pixels[(y*surf->w) + x] = pixel;
@@ -108,7 +130,6 @@ void Drawer::Line(int x0, int y0, int x1, int y1, Utils::color color) {
 
 void Drawer::Triangle(Utils::vertex V[3], Utils::vec3d pos, Utils::vec3d looking, float zees[3], bool fill = false) {
 	//Create triangle
-
 	int x1 = V[0].x;
 	int y1 = V[0].y;
 	int x2 = V[1].x;
@@ -188,9 +209,9 @@ void Drawer::Triangle(Utils::vertex V[3], Utils::vec3d pos, Utils::vec3d looking
 									//INTERPOLATION TIME
 									float Pz = Wv1 * zees[0] + Wv2 * zees[1] + Wv3 * zees[2];
 
-									float r = (Wv1 * V[0].c.r) + (Wv2 * V[1].c.r) + (Wv3 * V[2].c.r);
-									float g = (Wv1 * V[0].c.g) + (Wv2 * V[1].c.g) + (Wv3 * V[2].c.g);
-									float b = (Wv1 * V[0].c.b) + (Wv2 * V[1].c.b) + (Wv3 * V[2].c.b);
+									float r = ((Wv1 * V[0].c.r) + (Wv2 * V[1].c.r) + (Wv3 * V[2].c.r)) / 255.0f;
+									float g = ((Wv1 * V[0].c.g) + (Wv2 * V[1].c.g) + (Wv3 * V[2].c.g)) / 255.0f;
+									float b = ((Wv1 * V[0].c.b) + (Wv2 * V[1].c.b) + (Wv3 * V[2].c.b)) / 255.0f;
 
 									float depths = Pz;
 									float depth = sqrtf((pos.x - j)*(pos.x - j) + (pos.y - i)*(pos.y - i) + (pos.z - depths)*(pos.z - depths));
@@ -255,9 +276,9 @@ void Drawer::Triangle(Utils::vertex V[3], Utils::vec3d pos, Utils::vec3d looking
 
 									//INTERPOLATION TIME PART TWO
 									float Pz = Wv1 * zees[0] + Wv2 * zees[1] + Wv3 * zees[2];
-									float r = (Wv1 * V[0].c.r) + (Wv2 * V[1].c.r) + (Wv3 * V[2].c.r);
-									float g = (Wv1 * V[0].c.g) + (Wv2 * V[1].c.g) + (Wv3 * V[2].c.g);
-									float b = (Wv1 * V[0].c.b) + (Wv2 * V[1].c.b) + (Wv3 * V[2].c.b);
+									float r = ((Wv1 * V[0].c.r) + (Wv2 * V[1].c.r) + (Wv3 * V[2].c.r)) / 255.0f;
+									float g = ((Wv1 * V[0].c.g) + (Wv2 * V[1].c.g) + (Wv3 * V[2].c.g)) / 255.0f;
+									float b = ((Wv1 * V[0].c.b) + (Wv2 * V[1].c.b) + (Wv3 * V[2].c.b)) / 255.0f;
 
 									float depths = Pz;
 									float depth = sqrtf((pos.x - j)*(pos.x - j) + (pos.y - i)*(pos.y - i) + (pos.z - depths)*(pos.z - depths));

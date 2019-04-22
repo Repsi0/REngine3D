@@ -1,8 +1,6 @@
 #ifndef camera_h
 #define camera_h
 #include "utils.h"
-#include "vector_math.h"
-#include <math.h>
 
 class camera {
 private:
@@ -12,6 +10,7 @@ private:
 	Utils::vec3d up;
 	Utils::vec3d right;
 	Utils::vec3d forward;
+	Utils::rotation rot;
 	//Projection matrix stuff
 	float fov=90.0f;
 	float zNear=0.1f;
@@ -19,10 +18,12 @@ private:
 	float aspectRatio=1.0f;
 	//Matrices
 	Utils::mat4x4 projectionMatrix;
+	Utils::mat4x4 viewMatrix;
 
 	//Cool functions!
 	void calculateProjectionMatrix();
 	void calculateViewMatrix();
+	void calculateOrientationVectors();
 public:
 	//Const/destr.
 	camera(float fov, float zDists[2], const int width, const int height, Utils::vec3d facing_xyz[3]);

@@ -1,7 +1,6 @@
 #ifndef drawer_h
 #define drawer_h
 #include <SDL.h>
-#include <iostream>
 #include "utils.h"
 
 class Drawer {
@@ -17,6 +16,7 @@ private:
 	void CreateSurface();
 public:
 	Drawer(const char *TITLE, const int WIDTH, const int HEIGHT, bool &success, int driver, Uint32 flags);
+	Drawer(const char *TITLE, const int WIDTH, const int HEIGHT, bool &success);
 	~Drawer();
 
 	void CleanUp();
@@ -30,6 +30,6 @@ public:
 	void Rectangle(int x, int y, int w, int h, Utils::color color, bool fill);
 
 	void Line(int x0, int y0, int x1, int y1, Utils::color color);
-	void Triangle(Utils::vertex V[3], Utils::vec3d pos, Utils::vec3d looking, float zees[3], bool fill = false);
+	void Triangle(Utils::vertex V[3], Utils::vec3d pos, Utils::vec3d looking, float zees[3], bool fill);
 };
 #endif
