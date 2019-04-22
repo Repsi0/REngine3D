@@ -74,7 +74,8 @@ void REngine3D::DrawObjects(std::vector<Utils::gameobject> gos, Utils::vec3d pos
 		DrawMesh(go.m, transformedMatrix, cam);
 	}
 }
-
+//DrawObjects function takes camera, a std::vector<gameobject>, and an offset position/rotation, extracts the transform details 
+//from each gameobject and converts them into a Model Matrix, then passes (mesh, matrix, cam) into this function
 void REngine3D::DrawMesh(Utils::mesh m, Utils::mat4x4 modelMatrix, camera* cam) {
 	Utils::vec3d vUp = { 0,1,0 };
 

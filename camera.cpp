@@ -61,12 +61,8 @@ void camera::calculateViewMatrix() {
 	vec3d zaxis = Vector_Normalize(Vector_Sub(pos, forward));
 	vec3d xaxis = Vector_Normalize(Vector_CrossProduct(up,zaxis));
 	vec3d yaxis = Vector_CrossProduct(zaxis,xaxis);
-	
 
-	mat4x4 x = GenerateRotationMatrixX(rot.pitch);
-	mat4x4 y = GenerateRotationMatrixY(rot.yaw);
-	mat4x4 z = GenerateRotationMatrixZ(rot.roll);
-	mat4x4 orientation = Matrix_MultiplyMatrix(Matrix_MultiplyMatrix(x,y),z);
+	mat4x4 orientation = GenerateIdentityMatrix(); //DEBUG
 
 	mat4x4 translation = {
 		{
